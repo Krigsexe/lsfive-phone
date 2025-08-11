@@ -2,7 +2,7 @@
 # LSFive Phone - A Modern FiveM Phone Resource
 
 ![Phone Preview with Gemini & Krigs Brain](https://www.proxitek.fr/wp-content/uploads/2025/08/fivem-phone.png)
-![Phone Code with Gemini & Krigs Brain]([https://i.imgur.com/your-image-url.png](https://aistudio.google.com/app/prompts?state=%7B%22ids%22:%5B%221JX1sDJRu9-gDT4CBi-alZjc12q1fdjvw%22%5D,%22action%22:%22open%22,%22userId%22:%22109541760888863960722%22,%22resourceKeys%22:%7B%7D%7D&usp=sharing)) 
+[Phone Code with Gemini & Krigs Brain]([https://i.imgur.com/your-image-url.png](https://aistudio.google.com/app/prompts?state=%7B%22ids%22:%5B%221JX1sDJRu9-gDT4CBi-alZjc12q1fdjvw%22%5D,%22action%22:%22open%22,%22userId%22:%22109541760888863960722%22,%22resourceKeys%22:%7B%7D%7D&usp=sharing)) 
 LSFive Phone is a modern, feature-rich, and performance-oriented phone resource for FiveM, built with React and TypeScript. It is designed to be plug-and-play while offering deep customization possibilities for any server framework (ESX, QBCore, or standalone).
 
 ## Features
