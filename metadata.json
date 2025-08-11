@@ -1,0 +1,8 @@
+{
+  "name": "LSFive - Krigs Phone",
+  "description": "Téléphone FiveM",
+  "requestFramePermissions": [
+    "camera"
+  ],
+  "prompt": ""
+}

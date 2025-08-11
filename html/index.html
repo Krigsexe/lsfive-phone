@@ -1,0 +1,73 @@
+
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Phone</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<script type="importmap">
+{
+  "imports": {
+    "react/": "https://esm.sh/react@^19.1.1/",
+    "react": "https://esm.sh/react@^19.1.1",
+    "react-dom/": "https://esm.sh/react-dom@^19.1.1/",
+    "lucide-react": "https://esm.sh/lucide-react@^0.536.0",
+    "react-youtube": "https://esm.sh/react-youtube@^10.1.0"
+  }
+}
+</script>
+<style>
+    :root {
+      --bg-primary: #000000;
+      --bg-secondary: #1c1c1e;
+      --bg-tertiary: #2c2c2e;
+      --bg-quaternary: #3a3a3c;
+      
+      --text-primary: #ffffff;
+      --text-secondary: #8e8e93;
+      --text-tertiary: #636366;
+      
+      --accent-blue: #0a84ff;
+      --accent-green: #30d158;
+      --accent-red: #ff453a;
+      
+      --surface-glass: rgba(58, 58, 60, 0.7);
+      --surface-raised: #1c1c1e;
+      --border-color: #3a3a3c;
+    }
+
+    html[data-theme='light'] {
+      --bg-primary: #f2f2f7;
+      --bg-secondary: #ffffff;
+      --bg-tertiary: #e5e5ea;
+      --bg-quaternary: #d1d1d6;
+      
+      --text-primary: #000000;
+      --text-secondary: #3c3c4399; /* 60% opacity */
+      --text-tertiary: #3c3c434d; /* 30% opacity */
+      
+      --surface-glass: rgba(242, 242, 247, 0.8);
+      --surface-raised: #ffffff;
+      --border-color: #d1d1d6;
+    }
+
+    @keyframes app-view-fade-in {
+      from { opacity: 0; transform: scale(0.98); }
+      to { opacity: 1; transform: scale(1); }
+    }
+    @keyframes subtle-pulse {
+      0%, 100% { transform: scale(1); opacity: 1; }
+      50% { transform: scale(1.05); opacity: 0.9; }
+    }
+</style>
+</head>
+<body class="bg-transparent" style="font-family: 'Inter', sans-serif;">
+    <div id="root"></div>
+    <script type="module" src="/index.tsx"></script>
+</body>
+</html>
