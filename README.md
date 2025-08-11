@@ -1,6 +1,6 @@
 
 # LSFive Phone - A Modern FiveM Phone Resource
-![Hits](https://hits.seeyoufarm.com/api/count/incr/badge.svg?url=https://github.com/Krigsexe/lsfive-phone=views)
+[![Repo Views](https://komarev.com/ghpvc/?username=Krigsexe/lsfive-phone&color=blueviolet)](https://github.com/Krigsexe/lsfive-phone)
 
 ![Phone Preview with Gemini & Krigs Brain](https://www.proxitek.fr/wp-content/uploads/2025/08/fivem-phone.png)
 
