@@ -30,7 +30,7 @@ LSFive Phone is a modern, feature-rich, and performance-oriented phone resource 
 ## Installation
 
 1.  **Download:** Clone or download this repository into your `resources` directory.
-2.  **Database:** Import the `database.sql` file into your server's MySQL database. This will create all the necessary tables for the phone to function.
+2.  **Database:** Import the `SQL.md` file into your server's MySQL database. This will create all the necessary tables for the phone to function.
 3.  **Configuration:** Open `config.lua` and adjust the settings to your liking. At a minimum, you should set `Config.Framework` to match your server ('esx', 'qb-core', or 'standalone').
 4.  **Server CFG:** Ensure the resource is started in your `server.cfg` file. **Make sure it starts after your framework (`esx_legacy` or `qb-core`) and the dependencies (`ox_lib`, `oxmysql`).**
     ```cfg
