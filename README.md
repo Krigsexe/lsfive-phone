@@ -3,7 +3,7 @@
 
 [![Visitors Badge](https://api.visitorbadge.io/api/VisitorHit?user=Krigsexe&repo=lsfive-phone&countColor=%237B1E7A)](https://github.com/Krigsexe/lsfive-phone)
 
-![DEMO](https://lsfive-krigs-phone-550776260716.us-west1.run.app)
+[DEMO](https://lsfive-krigs-phone-550776260716.us-west1.run.app)
 
 ![Phone Preview with Gemini & Krigs Brain](https://www.proxitek.fr/wp-content/uploads/2025/08/fivem-phone.png)
 
