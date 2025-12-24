@@ -1,5 +1,4 @@
-
-# LSFive Phone - A Modern FiveM Phone Resource
+# LSFive Phone - A Modern Universal FiveM Phone Resource
 
 [![Visitors Badge](https://api.visitorbadge.io/api/VisitorHit?user=Krigsexe&repo=lsfive-phone&countColor=%237B1E7A)](https://github.com/Krigsexe/lsfive-phone)
 
@@ -7,124 +6,239 @@
 
 ![Phone Preview with Gemini & Krigs Brain](https://www.proxitek.fr/wp-content/uploads/2025/08/fivem-phone.png)
 
-LSFive Phone is a modern, feature-rich, and performance-oriented phone resource for FiveM, built with React and TypeScript. It is designed to be plug-and-play while offering deep customization possibilities for any server framework (ESX, QBCore, or standalone).
+LSFive Phone is a **modern, universal, and plug-n-play** phone resource for FiveM, built with React and TypeScript. It works out-of-the-box with **ESX**, **QBCore**, or as a **standalone** resource - no manual framework integration needed!
 
-## Features
+## Key Features
 
-*   **Modern UI:** A clean, iOS-inspired interface that is both beautiful and intuitive.
-*   **Core Apps:** Phone, Messages, Settings, Browser.
-*   **Functional Apps:** Bank, Garage, Businesses, Dispatch, Mail, Social, Music, Weather, and more.
-*   **Customization:**
-    *   Change themes (light/dark mode).
-    *   Set custom wallpapers via URL or file upload.
-    *   Install/uninstall optional apps via the App Store.
-    *   **Customizable Dock:** Drag and drop apps to and from the dock to organize your layout.
-*   **Performance:** Optimized client and server code to ensure minimal impact on performance.
-*   **Localization:** Full support for English and French out of the box. Adding new languages is simple.
-*   **Framework Agnostic:** Designed to work as a standalone resource, with easy integration points for ESX and QBCore.
-*   **Well-Documented:** Clear instructions for installation, configuration, and integration.
+### Universal Framework Support
+- **Automatic Framework Detection**: Automatically detects and integrates with ESX, QBCore, or runs standalone
+- **Zero Configuration Required**: Works immediately after installation on any server
+- **Full Framework Integration**: Bank transfers, vehicle spawning, job-specific apps - all work automatically
+
+### Core Applications
+- **Phone**: Full call system with voice chat support (pma-voice/mumble-voip)
+- **Messages**: SMS with conversations, read receipts, and contact integration
+- **Contacts**: Add, edit, delete contacts with custom avatars
+- **Browser**: Full-featured web browser with tabs and history
+- **Settings**: Theme, language, wallpaper, and more
+
+### Functional Applications
+- **Bank**: Balance, transfers, transaction history
+- **Garage**: View and spawn your vehicles directly from the phone
+- **Dispatch**: Emergency alert system for police, EMS, fire
+- **Businesses**: Directory with GPS navigation
+- **Social**: Instagram-like feed with posts and likes
+- **Music**: YouTube integration and audio player
+- **Mail**: Email client with inbox management
+- **Weather**: Real-time weather via wttr.in API
+- **Camera**: Photo capture (with fallback mock)
+
+### Customization
+- **Themes**: Light and dark mode
+- **Wallpapers**: Built-in selection + custom URL support
+- **App Management**: Install/uninstall apps via App Store
+- **Customizable Dock**: Drag-and-drop to organize your layout
+- **Localization**: English and French included (easily extensible)
 
 ## Dependencies
 
-*   [ox_lib](https://github.com/overextended/ox_lib): Required for its libraries and notification system.
-*   [oxmysql](https://github.com/overextended/oxmysql): Required for all database interactions.
+These resources must be started **before** lsfive-phone:
 
-## Installation
+1. **[ox_lib](https://github.com/overextended/ox_lib)** - Required for shared libraries and notifications
+2. **[oxmysql](https://github.com/overextended/oxmysql)** - Required for all database interactions
 
-1.  **Download:** Clone or download this repository into your `resources` directory.
-2.  **Database:** Import the `SQL.md` file into your server's MySQL database. This will create all the necessary tables for the phone to function.
-3.  **Configuration:** Open `config.lua` and adjust the settings to your liking. At a minimum, you should set `Config.Framework` to match your server ('esx', 'qb-core', or 'standalone').
-4.  **Server CFG:** Ensure the resource is started in your `server.cfg` file. **Make sure it starts after your framework (`esx_legacy` or `qb-core`) and the dependencies (`ox_lib`, `oxmysql`).**
-    ```cfg
-    ensure ox_lib
-    ensure oxmysql
-    ensure lsfive-phone
-    ```
+## Quick Installation (5 minutes)
 
-## Configuration (`config.lua`)
+### Step 1: Download
+```bash
+cd resources
+git clone https://github.com/Krigsexe/lsfive-phone.git
+# or download and extract the ZIP
+```
 
-| Setting                    | Description                                                                                               |
-| -------------------------- | --------------------------------------------------------------------------------------------------------- |
-| `Config.Command`           | The command to open the phone (e.g., 'phone'). Set to `false` to disable.                                 |
-| `Config.Keybind`           | The key mapping to open the phone. See FiveM docs for key codes.                                          |
-| `Config.Framework`         | Your server framework: 'standalone', 'esx', or 'qb-core'. **This is a critical setting.**                  |
-| `Config.DefaultLanguage`   | The default language for new users ('en' or 'fr').                                                        |
-| `Config.DefaultWallpaper`  | The default wallpaper URL for new users.                                                                  |
-| `Config.UseOxLibNotifications` | Set to `true` to use `ox_lib` notifications for a consistent server look. `false` uses a basic fallback. |
+### Step 2: Database Setup
+Import the SQL script from `SQL.md` into your database. This creates all necessary tables.
 
+```sql
+-- Copy the content from SQL.md and execute in your MySQL client
+```
 
-## Framework Integration
+### Step 3: Server Configuration
+Add to your `server.cfg`:
 
-To make the phone work with your framework's data (player identifiers, money, etc.), you **must** edit the `FRAMEWORK INTEGRATION` section at the top of `server/main.lua`.
+```cfg
+# Dependencies first
+ensure ox_lib
+ensure oxmysql
 
-**Example for `GetPlayerFromSource`:**
-You need to make sure this function correctly returns your framework's player object. The provided examples for ESX and QBCore should work for most recent versions.
+# Your framework (ESX or QBCore)
+ensure es_extended  # or qb-core
+
+# Then the phone
+ensure lsfive-phone
+```
+
+### Step 4: Done!
+Start your server. The phone will automatically:
+- Detect your framework (ESX/QBCore/Standalone)
+- Generate phone numbers for players
+- Handle all integrations
+
+**Default keybind: F1 or /phone**
+
+## Configuration
+
+Edit `config.lua` to customize:
 
 ```lua
--- server/main.lua
+Config = {}
 
-function GetPlayerFromSource(source)
-    if Config.Framework == 'esx' then
-        -- For ESX
-        return exports.esx:GetPlayerFromId(source)
-    elseif Config.Framework == 'qb-core' then
-        -- For QBCore
-        return exports['qb-core']:GetPlayer(source)
-    else 
-        -- For Standalone (no changes needed unless you have a custom player system)
-        return {
-            identifier = 'steam:' .. GetPlayerIdentifier(source, 0):gsub('steam:', ''),
-            name = GetPlayerName(source),
-        }
-    end
-end
+-- General
+Config.Command = 'phone'           -- Command to open phone (false to disable)
+Config.Keybind = 'F1'              -- Keybinding
+Config.Framework = 'auto'          -- 'auto', 'esx', 'qb-core', 'standalone'
+
+-- Defaults
+Config.DefaultLanguage = 'fr'      -- 'en' or 'fr'
+Config.DefaultWallpaper = '...'    -- URL
+Config.DefaultTheme = 'dark'       -- 'dark' or 'light'
+
+-- Features
+Config.EnableVoiceCalls = true     -- pma-voice/mumble-voip integration
+Config.EnableGarageSpawn = true    -- Spawn vehicles from phone
+Config.AllowOfflineTransfers = true -- Bank transfers to offline players
+
+-- And many more options...
 ```
-You will also need to implement the logic for features like bank transfers within the corresponding NUI callbacks in `server/main.lua`, using your framework's functions to add/remove money.
 
-## NUI Callbacks & Events
+See the full `config.lua` for all available options.
 
-The resource is event-driven. The UI communicates with the server via NUI callbacks. Here is a list of events you may need to interact with.
+## Voice Call Integration
 
-### Client -> Server (NUI Callbacks)
+The phone supports voice calls with:
+- **[pma-voice](https://github.com/AvarianKnight/pma-voice)** - Recommended
+- **[mumble-voip](https://github.com/FrazzIe/mumble-voip)** - Alternative
 
-These are handled in `server/main.lua`.
+Enable with `Config.EnableVoiceCalls = true`
 
-| Event Name                    | Payload Data (`data`)                               | Server-Side Action                                                              |
-| ----------------------------- | --------------------------------------------------- | ------------------------------------------------------------------------------- |
-| `phone:server:requestData`    | `{}`                                                | Requests all phone data for the player.                                         |
-| `call:start`                  | `{ phoneNumber: "123-4567" }`                       | Initiate a call.                                                                |
-| `messages:send`               | `{ recipientNumber: "...", message: "..." }`        | Send a text message.                                                            |
-| `bank:transfer`               | `{ recipient: "...", amount: "...", reason: "..." }`| Perform a bank transfer. **(Requires framework logic)**                         |
-| `dispatch:createAlert`        | `{ title: "...", details: "...", location: "..." }` | Create a new dispatch alert.                                                    |
-| `garage:requestVehicle`       | `{ vehicleId: 1 }`                                  | Spawn the requested vehicle. **(Requires framework logic)**                     |
-| `mail:send`                   | `{ to: "a@b.c", subject: "...", body: "..." }`      | Send an email.                                                                  |
-| `social:createPost`           | `{ imageUrl: "...", caption: "..." }`               | Create a new social media post.                                                 |
-| `social:likePost`             | `{ postId: "..." }`                                 | Toggle a like on a post.                                                        |
-| `phone:updateSettings`        | `{ settings: '{"theme":"dark", ...}' }`             | Update the player's phone settings (theme, etc.).                               |
-| `...`                         | `...`                                               | See `server/main.lua` for the full list of callbacks.                           |
+## Server Exports
 
-### Server -> Client (Net Events)
+```lua
+-- Get a player's phone number
+local phoneNumber = exports['lsfive-phone']:GetPlayerPhoneNumber(source)
 
-These are handled in `client/main.lua`.
+-- Send an SMS from your script
+exports['lsfive-phone']:SendSMS('555-1234', '555-5678', 'Hello!')
 
-| Event Name                    | Payload Data                                        | Client-Side Action                                                              |
-| ----------------------------- | --------------------------------------------------- | ------------------------------------------------------------------------------- |
-| `phone:client:loadData`       | `{ userData, contacts, calls, ... }`                | Sends the player's complete phone data to the UI.                               |
-| `phone:client:incomingCall`   | `{ contact: { id, name, ... } }`                    | Notifies the UI of an incoming call, forcing the phone to open.                 |
-| `phone:client:notify`         | `{ title, description, type }`                      | Displays a notification to the player.                                          |
+-- Send an email
+exports['lsfive-phone']:SendMail('sender@ls.mail', 'recipient@ls.mail', 'Subject', 'Body')
+
+-- Create a dispatch alert
+exports['lsfive-phone']:CreateDispatchAlert('police', 'Robbery', 'Armed robbery in progress', 'Fleeca Bank')
+```
+
+## Client Exports
+
+```lua
+-- Check if phone is open
+local isOpen = exports['lsfive-phone']:IsPhoneOpen()
+
+-- Open/close phone programmatically
+exports['lsfive-phone']:OpenPhone()
+exports['lsfive-phone']:ClosePhone()
+
+-- Send notification
+exports['lsfive-phone']:SendNotification('Title', 'Message', 'success')
+```
+
+## File Structure
+
+```
+lsfive-phone/
+├── fxmanifest.lua      # Resource manifest
+├── config.lua          # Configuration
+├── SQL.md              # Database schema
+├── client/
+│   └── main.lua        # Client-side logic
+├── server/
+│   └── main.lua        # Server-side logic
+├── shared/
+│   └── functions.lua   # Shared utilities
+├── html/               # React UI (built)
+│   ├── index.html
+│   └── ...
+├── locales/            # Language files
+│   ├── en.json
+│   └── fr.json
+└── components/         # React components (source)
+```
+
+## Framework-Specific Notes
+
+### ESX
+- Uses `identifier` from `users` table
+- Bank account: `xPlayer.getAccount('bank')`
+- Vehicles from `owned_vehicles` table
+
+### QBCore
+- Uses `citizenid` from `players` table
+- Bank account: `Player.PlayerData.money.bank`
+- Vehicles from `player_vehicles` table
+
+### Standalone
+- Uses `license` identifier
+- No money/vehicle integration (customize as needed)
+
+## Adding New Languages
+
+1. Copy `locales/en.json` to `locales/xx.json`
+2. Translate all values
+3. Add the language option in Settings app
+
+## Troubleshooting
+
+### Phone doesn't open
+- Check if `ox_lib` and `oxmysql` are started before the phone
+- Verify the keybind isn't conflicting with another resource
+- Check server console for errors
+
+### No phone number assigned
+- Ensure the SQL tables were created correctly
+- Check that your framework is detected (enable `Config.Debug = true`)
+
+### Bank transfers not working
+- Verify your framework is correctly detected
+- Check that the player has sufficient funds
+- Enable `Config.LogBankTransactions = true` for debugging
+
+### Vehicles not spawning
+- Ensure `Config.EnableGarageSpawn = true`
+- Verify the vehicle exists in your framework's database
+- Check that the vehicle model is valid
+
+## Contributing
+
+Contributions are welcome! Please:
+1. Fork the repository
+2. Create a feature branch
+3. Submit a pull request
+
+## Credits
+
+- **Krigs** - Original development and UI design
+- **Gemini AI** - Framework integration and plug-n-play features
+- **Community** - Testing and feedback
+
+## License
+
+This project is open source. Feel free to use, modify, and distribute.
 
 ---
 
-*This phone was developed by Krigs and enhanced for plug-and-play integration by Gemini AI.*
-
----
-
-**⭐ Stars, 🍴 Forks & 🤝 Contributions Welcome!**
+**Stars, Forks & Contributions Welcome!**
 
 ![Profile Views](https://komarev.com/ghpvc/?username=Krigsexe&color=blueviolet&style=for-the-badge)
 ![GitHub Stars](https://img.shields.io/github/stars/Krigsexe?style=for-the-badge&logo=github)
-
-</div>
 
 ---
 
