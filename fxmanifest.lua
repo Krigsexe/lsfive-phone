@@ -15,6 +15,10 @@ repository 'https://github.com/Krigsexe/lsfive-phone'
 
 lua54 'yes'
 
+-- Decommenter la ligne suivante pour utiliser Node.js 22 (optionnel)
+-- Requiert un serveur FiveM recent (2024+)
+-- node_version '22'
+
 ui_page 'html/index.html'
 
 shared_scripts {
@@ -51,11 +55,13 @@ dependencies {
     'oxmysql'
 }
 
--- Exports pour l'intégration avec d'autres ressources
+-- Exports pour l'integration avec d'autres ressources
 exports {
     'GetPlayerPhoneNumber',
     'SendNotification',
-    'IsPhoneOpen'
+    'IsPhoneOpen',
+    'OpenPhone',
+    'ClosePhone'
 }
 
 server_exports {
