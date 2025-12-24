@@ -1,247 +1,195 @@
-# LSFive Phone - A Modern Universal FiveM Phone Resource
+# LSFive Phone - Universal FiveM Phone Resource
 
 [![Visitors Badge](https://api.visitorbadge.io/api/VisitorHit?user=Krigsexe&repo=lsfive-phone&countColor=%237B1E7A)](https://github.com/Krigsexe/lsfive-phone)
 
 [DEMO](https://lsfive-krigs-phone-550776260716.us-west1.run.app)
 
-![Phone Preview with Gemini & Krigs Brain](https://www.proxitek.fr/wp-content/uploads/2025/08/fivem-phone.png)
+![Phone Preview](https://www.proxitek.fr/wp-content/uploads/2025/08/fivem-phone.png)
 
-LSFive Phone is a **modern, universal, and plug-n-play** phone resource for FiveM, built with React and TypeScript. It works out-of-the-box with **ESX**, **QBCore**, or as a **standalone** resource - no manual framework integration needed!
+LSFive Phone est un telephone **moderne, universel et plug-n-play** pour FiveM, construit avec React et TypeScript. Il fonctionne immediatement avec **ESX**, **QBCore**, ou en mode **standalone** - aucune integration manuelle requise!
 
-## Key Features
+## Fonctionnalites
 
-### Universal Framework Support
-- **Automatic Framework Detection**: Automatically detects and integrates with ESX, QBCore, or runs standalone
-- **Zero Configuration Required**: Works immediately after installation on any server
-- **Full Framework Integration**: Bank transfers, vehicle spawning, job-specific apps - all work automatically
+### Support Universel des Frameworks
+- **Detection Automatique**: Detecte automatiquement ESX, QBCore, ou fonctionne en standalone
+- **Zero Configuration**: Fonctionne immediatement apres l'installation
+- **Integration Complete**: Virements bancaires, spawn de vehicules, apps metiers - tout fonctionne automatiquement
 
-### Core Applications
-- **Phone**: Full call system with voice chat support (pma-voice/mumble-voip)
-- **Messages**: SMS with conversations, read receipts, and contact integration
-- **Contacts**: Add, edit, delete contacts with custom avatars
-- **Browser**: Full-featured web browser with tabs and history
-- **Settings**: Theme, language, wallpaper, and more
+### Applications
+| Core | Fonctionnelles | Optionnelles |
+|------|----------------|--------------|
+| Telephone (appels vocaux) | Banque | Social (Instagram-like) |
+| Messages SMS | Garage | Musique (YouTube) |
+| Contacts | Dispatch | Meteo |
+| Navigateur | Entreprises | Photos |
+| Parametres | Mail | Notes |
 
-### Functional Applications
-- **Bank**: Balance, transfers, transaction history
-- **Garage**: View and spawn your vehicles directly from the phone
-- **Dispatch**: Emergency alert system for police, EMS, fire
-- **Businesses**: Directory with GPS navigation
-- **Social**: Instagram-like feed with posts and likes
-- **Music**: YouTube integration and audio player
-- **Mail**: Email client with inbox management
-- **Weather**: Real-time weather via wttr.in API
-- **Camera**: Photo capture (with fallback mock)
+### Personnalisation
+- Themes clair/sombre
+- Fonds d'ecran personnalises
+- Installation/desinstallation d'apps
+- Dock personnalisable par drag-n-drop
+- Localisation FR/EN
 
-### Customization
-- **Themes**: Light and dark mode
-- **Wallpapers**: Built-in selection + custom URL support
-- **App Management**: Install/uninstall apps via App Store
-- **Customizable Dock**: Drag-and-drop to organize your layout
-- **Localization**: English and French included (easily extensible)
+---
 
-## Dependencies
+## Dependances
 
-These resources must be started **before** lsfive-phone:
+> **Important (Decembre 2025)**: [Overextended](https://github.com/overextended) a archive ses repositories en avril 2025. Les versions maintenues sont disponibles chez [CommunityOx](https://github.com/CommunityOx). Voir [coxdocs.dev](https://coxdocs.dev/) pour la documentation.
 
-1. **[ox_lib](https://github.com/overextended/ox_lib)** - Required for shared libraries and notifications
-2. **[oxmysql](https://github.com/overextended/oxmysql)** - Required for all database interactions
+Ces ressources doivent etre demarrees **AVANT** lsfive-phone:
 
-## Quick Installation (5 minutes)
+| Ressource | Repository | Notes |
+|-----------|------------|-------|
+| **oxmysql** | [CommunityOx/oxmysql](https://github.com/CommunityOx/oxmysql) | v2.13.1 supporte Node.js 22 |
+| **ox_lib** | [CommunityOx/ox_lib](https://github.com/CommunityOx/ox_lib) | v3.32.2 (Dec 2025) |
 
-### Step 1: Download
+**Ordre de demarrage recommande**: oxmysql → ox_lib → framework → lsfive-phone
+
+---
+
+## Installation Rapide
+
+### 1. Telecharger
 ```bash
 cd resources
 git clone https://github.com/Krigsexe/lsfive-phone.git
-# or download and extract the ZIP
 ```
 
-### Step 2: Database Setup
-Import the SQL script from `SQL.md` into your database. This creates all necessary tables.
-
-```sql
--- Copy the content from SQL.md and execute in your MySQL client
+### 2. Base de Donnees
+```bash
+mysql -u root -p votre_database < install.sql
 ```
 
-### Step 3: Server Configuration
-Add to your `server.cfg`:
+> **Recommandation**: Utilisez **MariaDB** plutot que MySQL 8 pour une meilleure compatibilite avec FiveM.
+
+### 3. Configuration server.cfg
 
 ```cfg
-# Dependencies first
-ensure ox_lib
+# Connection BDD (IMPORTANT: utilisez 'set' pas 'setr' pour la securite)
+set mysql_connection_string "mysql://user:password@localhost/fivem"
+
+# Ordre de demarrage
 ensure oxmysql
-
-# Your framework (ESX or QBCore)
-ensure es_extended  # or qb-core
-
-# Then the phone
+ensure ox_lib
+ensure es_extended  # ou qb-core
 ensure lsfive-phone
 ```
 
-### Step 4: Done!
-Start your server. The phone will automatically:
-- Detect your framework (ESX/QBCore/Standalone)
-- Generate phone numbers for players
-- Handle all integrations
+### 4. C'est tout!
 
-**Default keybind: F1 or /phone**
+Le telephone detecte automatiquement votre framework et fonctionne immediatement.
+
+**Keybind: F1 | Commande: /phone**
+
+---
 
 ## Configuration
 
-Edit `config.lua` to customize:
+Editez `config.lua`:
 
 ```lua
 Config = {}
 
--- General
-Config.Command = 'phone'           -- Command to open phone (false to disable)
-Config.Keybind = 'F1'              -- Keybinding
+Config.Command = 'phone'           -- Commande (false pour desactiver)
+Config.Keybind = 'F1'              -- Touche
 Config.Framework = 'auto'          -- 'auto', 'esx', 'qb-core', 'standalone'
 
--- Defaults
-Config.DefaultLanguage = 'fr'      -- 'en' or 'fr'
-Config.DefaultWallpaper = '...'    -- URL
-Config.DefaultTheme = 'dark'       -- 'dark' or 'light'
+Config.DefaultLanguage = 'fr'      -- 'en' ou 'fr'
+Config.DefaultTheme = 'dark'       -- 'dark' ou 'light'
 
--- Features
-Config.EnableVoiceCalls = true     -- pma-voice/mumble-voip integration
-Config.EnableGarageSpawn = true    -- Spawn vehicles from phone
-Config.AllowOfflineTransfers = true -- Bank transfers to offline players
-
--- And many more options...
+Config.EnableVoiceCalls = true     -- pma-voice/mumble-voip
+Config.EnableGarageSpawn = true    -- Spawn vehicules
+Config.AllowOfflineTransfers = true -- Virements hors-ligne
 ```
 
-See the full `config.lua` for all available options.
+---
 
-## Voice Call Integration
+## Node.js 22 (Optionnel)
 
-The phone supports voice calls with:
-- **[pma-voice](https://github.com/AvarianKnight/pma-voice)** - Recommended
-- **[mumble-voip](https://github.com/FrazzIe/mumble-voip)** - Alternative
-
-Enable with `Config.EnableVoiceCalls = true`
-
-## Server Exports
+FiveM supporte maintenant Node.js 22. Pour l'activer, decommentez dans `fxmanifest.lua`:
 
 ```lua
--- Get a player's phone number
-local phoneNumber = exports['lsfive-phone']:GetPlayerPhoneNumber(source)
-
--- Send an SMS from your script
-exports['lsfive-phone']:SendSMS('555-1234', '555-5678', 'Hello!')
-
--- Send an email
-exports['lsfive-phone']:SendMail('sender@ls.mail', 'recipient@ls.mail', 'Subject', 'Body')
-
--- Create a dispatch alert
-exports['lsfive-phone']:CreateDispatchAlert('police', 'Robbery', 'Armed robbery in progress', 'Fleeca Bank')
+node_version '22'
 ```
 
-## Client Exports
+---
 
+## Exports
+
+### Serveur
 ```lua
--- Check if phone is open
-local isOpen = exports['lsfive-phone']:IsPhoneOpen()
+exports['lsfive-phone']:GetPlayerPhoneNumber(source)
+exports['lsfive-phone']:SendSMS(from, to, message)
+exports['lsfive-phone']:SendMail(from, to, subject, body)
+exports['lsfive-phone']:CreateDispatchAlert(dept, title, details, location)
+```
 
--- Open/close phone programmatically
+### Client
+```lua
+exports['lsfive-phone']:IsPhoneOpen()
 exports['lsfive-phone']:OpenPhone()
 exports['lsfive-phone']:ClosePhone()
-
--- Send notification
-exports['lsfive-phone']:SendNotification('Title', 'Message', 'success')
+exports['lsfive-phone']:SendNotification(title, msg, type)
 ```
 
-## File Structure
+---
 
-```
-lsfive-phone/
-├── fxmanifest.lua      # Resource manifest
-├── config.lua          # Configuration
-├── SQL.md              # Database schema
-├── client/
-│   └── main.lua        # Client-side logic
-├── server/
-│   └── main.lua        # Server-side logic
-├── shared/
-│   └── functions.lua   # Shared utilities
-├── html/               # React UI (built)
-│   ├── index.html
-│   └── ...
-├── locales/            # Language files
-│   ├── en.json
-│   └── fr.json
-└── components/         # React components (source)
+## Voice Chat
+
+Support:
+- [pma-voice](https://github.com/AvarianKnight/pma-voice) (recommande)
+- [mumble-voip](https://github.com/FrazzIe/mumble-voip)
+
+---
+
+## Build Frontend
+
+```bash
+npm install
+npm run build  # Output dans html/
 ```
 
-## Framework-Specific Notes
+Compatible Node.js 16.9+ (runtime FiveM par defaut)
 
-### ESX
-- Uses `identifier` from `users` table
-- Bank account: `xPlayer.getAccount('bank')`
-- Vehicles from `owned_vehicles` table
+---
 
-### QBCore
-- Uses `citizenid` from `players` table
-- Bank account: `Player.PlayerData.money.bank`
-- Vehicles from `player_vehicles` table
+## Notes Framework
 
-### Standalone
-- Uses `license` identifier
-- No money/vehicle integration (customize as needed)
+| Framework | Identifier | Compte Bancaire | Vehicules |
+|-----------|------------|-----------------|-----------|
+| ESX | `users.identifier` | `xPlayer.getAccount('bank')` | `owned_vehicles` |
+| QBCore | `players.citizenid` | `Player.PlayerData.money.bank` | `player_vehicles` |
+| Standalone | `license` | - | - |
 
-## Adding New Languages
+---
 
-1. Copy `locales/en.json` to `locales/xx.json`
-2. Translate all values
-3. Add the language option in Settings app
+## Depannage
 
-## Troubleshooting
+| Probleme | Solution |
+|----------|----------|
+| Telephone ne s'ouvre pas | Verifiez l'ordre de demarrage des ressources |
+| Pas de numero | Verifiez que les tables SQL existent |
+| Virements echouent | Activez `Config.Debug = true` |
 
-### Phone doesn't open
-- Check if `ox_lib` and `oxmysql` are started before the phone
-- Verify the keybind isn't conflicting with another resource
-- Check server console for errors
+---
 
-### No phone number assigned
-- Ensure the SQL tables were created correctly
-- Check that your framework is detected (enable `Config.Debug = true`)
+## References
 
-### Bank transfers not working
-- Verify your framework is correctly detected
-- Check that the player has sufficient funds
-- Enable `Config.LogBankTransactions = true` for debugging
+- [FiveM Resource Manifest](https://docs.fivem.net/docs/scripting-reference/resource-manifest/resource-manifest/)
+- [CommunityOx Documentation](https://coxdocs.dev/)
+- [FiveM JavaScript Runtime](https://docs.fivem.net/docs/scripting-manual/runtimes/javascript/)
+- [Node.js 22 Support PR](https://github.com/citizenfx/fivem/pull/2479)
 
-### Vehicles not spawning
-- Ensure `Config.EnableGarageSpawn = true`
-- Verify the vehicle exists in your framework's database
-- Check that the vehicle model is valid
-
-## Contributing
-
-Contributions are welcome! Please:
-1. Fork the repository
-2. Create a feature branch
-3. Submit a pull request
+---
 
 ## Credits
 
-- **Krigs** - Original development and UI design
-- **Gemini AI** - Framework integration and plug-n-play features
-- **Community** - Testing and feedback
-
-## License
-
-This project is open source. Feel free to use, modify, and distribute.
+- **Krigs** - Developpement et UI
+- **Community** - Tests et contributions
 
 ---
 
-**Stars, Forks & Contributions Welcome!**
+**Stars & Contributions Welcome!**
 
 ![Profile Views](https://komarev.com/ghpvc/?username=Krigsexe&color=blueviolet&style=for-the-badge)
-![GitHub Stars](https://img.shields.io/github/stars/Krigsexe?style=for-the-badge&logo=github)
-
----
-
-<div align="center">
-  <img src="https://capsule-render.vercel.app/api?type=waving&color=gradient&height=100&section=footer&text=Thank%20you%20for%20visiting!&fontSize=16&fontAlignY=65&desc=Merci%20pour%20votre%20visite!&descAlignY=80&descAlign=62"/>
-</div>
