@@ -4,7 +4,6 @@
 
 [DEMO](https://lsfive-krigs-phone-550776260716.us-west1.run.app)
 
-![Phone Preview](https://www.proxitek.fr/wp-content/uploads/2025/08/fivem-phone.png)
 
 LSFive Phone est un telephone **moderne, universel et plug-n-play** pour FiveM, construit avec React et TypeScript. Il fonctionne immediatement avec **ESX**, **QBCore**, ou en mode **standalone** - aucune integration manuelle requise!
 
